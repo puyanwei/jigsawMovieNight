@@ -9,18 +9,19 @@ class List extends Component {
   }
 
   componentDidMount() {
-    let self = this;
     fetch(
       "https://api.themoviedb.org/3/discover/movie?api_key=121486b23802e0b6735125ff1892f340&sort_by_popularity.desc"
     )
       .then(function(results) {
         return results.json();
       })
-      .then(function(data) {
-        self.setState({
-          movies: data.results
-        });
-      });
+      .then(
+        function(data) {
+          this.setState({
+            movies: data.results
+          });
+        }.bind(this)
+      );
   }
 
   render() {
