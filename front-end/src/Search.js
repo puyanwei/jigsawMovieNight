@@ -1,22 +1,40 @@
-import React, {Component} from "react";
+import React, { Component } from "react";
 
 class Search extends Component {
-  render() {
-    return(
+  constructor(props) {
+    super(props);
+    this.state = {
+      movies: []
+    };
+  }
 
-       <div className="Search">
-      <h2>Search for a Movie</h2>
-       <div>
-       <form className="searchBox" onSubmit={this.onFormSubmit}>
-       <input type="text" name="userInput" value="text" />
-       <button type="submit">Search</button>
-       </form>
-       </div>
-       </div>
-
-
+  componentDidMount() {
+    fetch(
+      "https://api.themoviedb.org/3/discover/movie?api_key=121486b23802e0b6735125ff1892f340&sort_by_popularity.desc"
     )
+      .then(function(results) {
+        return results.json();
+      })
+      .then(function(data) {
+        console.log(data.results[0].title);
+      });
+  }
+
+  render() {
+    return (
+      <div className="Search">
+        <h2>Search for a Movie</h2>
+        <div>
+          <form className="searchBox" onSubmit={this.onFormSubmit}>
+            <input type="text" name="userInput" />
+            <button type="submit">Search</button>
+          </form>
+        </div>
+
+        <div className="PopularList" />
+      </div>
+    );
   }
 }
 
-export default Search
+export default Search;
