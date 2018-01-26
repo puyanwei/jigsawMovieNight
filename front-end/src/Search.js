@@ -9,6 +9,7 @@ class Search extends Component {
   }
 
   componentDidMount() {
+    let self = this;
     fetch(
       "https://api.themoviedb.org/3/discover/movie?api_key=121486b23802e0b6735125ff1892f340&sort_by_popularity.desc"
     )
@@ -16,7 +17,9 @@ class Search extends Component {
         return results.json();
       })
       .then(function(data) {
-        console.log(data.results[0].title);
+        self.setState({
+          movies: data.results
+        });
       });
   }
 
@@ -32,6 +35,7 @@ class Search extends Component {
         </div>
 
         <div className="PopularList" />
+        {this.state.movies.map(movie => <li>{movie.title}</li>)}
       </div>
     );
   }
